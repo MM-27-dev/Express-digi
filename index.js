@@ -2,6 +2,7 @@ import express from "express";
 import "dotenv/config";
 const app = express();
 const port = process.env.PORT||3000;
+const hostname = process.env.HOSTNAME || "127.0.0.1"
 app.use(express.json());
 
 let teaData = [];
@@ -49,6 +50,6 @@ app.delete("/teas/:id", (req, res) => {
 });
   
 
-app.listen(port, () => {
-  console.log(`Server is running at the port : ${port}`);
+app.listen(port,hostname, () => {
+  console.log(`Server is running at the port : http://${hostname}/${port}`);
 });
