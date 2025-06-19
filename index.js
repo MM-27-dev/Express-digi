@@ -29,7 +29,7 @@ let teaData = [];
 let nextId = 1;
 
 app.post("/teas", (req, res) => {
-  logger.info("Post Requst happened")
+  logger.warn("Post Requst happened")
   const { name, price } = req.body;
   const newTea = { id: nextId++, name, price };
   teaData.push(newTea);
