@@ -1,8 +1,8 @@
 import express from "express";
 import "dotenv/config";
+
 const app = express();
-const port = process.env.PORT||3000;
-const hostname = process.env.HOSTNAME || "127.0.0.1"
+const port = process.env.PORT || 3000; // Render will provide this
 app.use(express.json());
 
 let teaData = [];
@@ -22,7 +22,7 @@ app.get("/teas", (req, res) => {
 app.get("/teas/:id", (req, res) => {
   const tea = teaData.find((t) => t.id === parseInt(req.params.id));
   if (!tea) {
-    res.status(404).send("Tea not available");
+    return res.status(404).send("Tea not available");
   }
 
   res.status(200).send(tea);
@@ -31,7 +31,7 @@ app.get("/teas/:id", (req, res) => {
 app.put("/teas/:id", (req, res) => {
   const tea = teaData.find((t) => t.id === parseInt(req.params.id));
   if (!tea) {
-    res.status(404).send("Tea not available");
+    return res.status(404).send("Tea not available");
   }
 
   const { name, price } = req.body;
@@ -46,10 +46,9 @@ app.delete("/teas/:id", (req, res) => {
     return res.status(404).send("Tea not found");
   }
   teaData.splice(index, 1);
-  res.status(204).send('deleted'); // No need to send body for 204
+  res.status(204).send("deleted");
 });
-  
 
-app.listen(port,hostname, () => {
-  console.log(`Server is running at the port : http://${hostname}/${port}`);
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Server is running on http://0.0.0.0:${port}`);
 });
